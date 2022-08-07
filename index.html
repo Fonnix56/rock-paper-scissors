@@ -8,45 +8,71 @@
 </head>
 <body>
     <script>
-            // ROCK PAPER SCISSORS //
-            //
-            // COMPUTER CHOICE AND PLAYER CHOICE
-            // getComputerChoice function
-            // computerSelection = either rock, paper, scissors
-            // alert prompt choose rock, paper or scissors
-            // playerSelection = either rock, paper, scissors else error
+        function getComputerChoice() {
+            const choices = ['Rock', 'Paper', 'Scissors'];
+            const random = Math.floor(Math.random() * choices.length);
+            console.log('The computer chose', (choices[random]));
+            return (choices[random]);
+        }
 
-            // PLAY A ROUND
-            // playRound function
-            // if computerSelection == playerSelection draw
-            // if computerSelection beats playerSelection computer wins else computer lose
-            // return the result of the round
-            // 
-            // GAME SCORE 
-            // game function
-            // call playRound to play best of 5
-            // keep score throughout the game
-            // report the winner or loser at the end
-
-
-            function getComputerChoice() {
-                const choices = ['Rock', 'Paper', 'Scissors'];
-                const random = Math.floor(Math.random() * choices.length);
-            }
-            getComputerChoice();
-
-            function getPlayerChoice() {
+        function getPlayerChoice() {
                 let playerChoice = prompt('Please choose either Rock, Paper or Scissors');
                 playerChoice = playerChoice.replace(/rock/ig, 'Rock');
                 playerChoice = playerChoice.replace(/paper/ig, 'Paper');
                 playerChoice = playerChoice.replace(/scissors/ig, 'Scissors');
                 if (playerChoice == 'Rock' || playerChoice == 'Paper' || playerChoice == 'Scissors') {
-                    console.log('You chose',playerChoice,'!');
-                } else (console.log('Error: Invalid selection'));
+                    console.log('---------- N E W  R O U N D----------');
+                    console.log('You chose',playerChoice);
+                } else (console.log('Error: Invalid selection'), getPlayerChoice());
+                return (playerChoice);
+        }
+        let playerWins = 0;
+        let computerWins = 0;
+        
+        function playRound() {
+            const playerChoice = getPlayerChoice();
+            const computerChoice = getComputerChoice();
+            if (playerChoice == computerChoice) {
+                console.log('Draw, nobody wins.');
+                playRound();
+                return (playerWins, computerWins);
+            } else if (playerChoice == 'Rock' && computerChoice == 'Scissors') {
+                playerWins++;
+                console.log('You win the round!');
+                console.log('The score is',playerWins,'to',computerWins,'!');
+                return (playerWins, computerWins);
+            } else if (playerChoice == 'Paper' && computerChoice == 'Rock') {
+                playerWins++;
+                console.log('You win the round!');
+                console.log('The score is',playerWins,'to',computerWins,'!');
+                return (playerWins, computerWins);
+            } else if (playerChoice == 'Scissors' && computerChoice == 'Paper') {
+                playerWins++;
+                console.log('You win the round!');
+                console.log('The score is',playerWins,'to',computerWins,'!');
+                return (playerWins, computerWins);
+            } else {
+                computerWins++;
+                console.log('The computer has won the round!');
+                console.log('The score is',playerWins,'to',computerWins,'!');
+                return (playerWins, computerWins);
             }
-            getPlayerChoice();
+        }
 
-
+        function game() {
+            for (let roundsPlayed = 0; roundsPlayed < 5; roundsPlayed++) {
+                playRound();
+            }
+            if (playerWins == computerWins) {
+            console.log('The score is',playerWins,'to',computerWins,'!');
+            console.log('The game is a draw!');
+            } else if (playerWins > computerWins) {
+               console.log('You have won the game!');
+            } else {
+                console.log('The computer has won the game!');
+            }
+        }
+        game();
 
     </script>
 </body>
